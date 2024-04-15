@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UserSecretsId>03829340-c9c8-4acf-8976-3894f5d92fe4</UserSecretsId>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="IGDB" Version="3.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.4" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.4">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="NLog" Version="5.2.8" />
+		<PackageReference Include="NLog.Web.AspNetCore" Version="5.3.8" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Dysnomia.CoursFrontM1.GamesDb.Business\Dysnomia.CoursFrontM1.GamesDb.Business.csproj" />
+		<ProjectReference Include="..\Dysnomia.CoursFrontM1.GamesDb.Common\Dysnomia.CoursFrontM1.GamesDb.Common.csproj" />
+		<ProjectReference Include="..\Dysnomia.CoursFrontM1.GamesDb.DataAccess\Dysnomia.CoursFrontM1.GamesDb.DataAccess.csproj" />
+	</ItemGroup>
+
+</Project>

@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34622.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dysnomia.CoursFrontM1.GamesDb.WebAPI", "Dysnomia.CoursFrontM1.GamesDb.WebAPI\Dysnomia.CoursFrontM1.GamesDb.WebAPI.csproj", "{74718856-8B04-443C-BCED-F9EB705318A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dysnomia.CoursFrontM1.GamesDb.Common", "Dysnomia.CoursFrontM1.GamesDb.Common\Dysnomia.CoursFrontM1.GamesDb.Common.csproj", "{57922B57-201A-4DCF-B91E-D26718E6D0B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dysnomia.CoursFrontM1.GamesDb.Business", "Dysnomia.CoursFrontM1.GamesDb.Business\Dysnomia.CoursFrontM1.GamesDb.Business.csproj", "{37BBF197-21CD-46A3-8A72-173CBA2FE7A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dysnomia.CoursFrontM1.GamesDb.DataAccess", "Dysnomia.CoursFrontM1.GamesDb.DataAccess\Dysnomia.CoursFrontM1.GamesDb.DataAccess.csproj", "{04B98D5A-6A44-482F-8A5E-8DBFA37A3DCE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{74718856-8B04-443C-BCED-F9EB705318A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74718856-8B04-443C-BCED-F9EB705318A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74718856-8B04-443C-BCED-F9EB705318A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74718856-8B04-443C-BCED-F9EB705318A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57922B57-201A-4DCF-B91E-D26718E6D0B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57922B57-201A-4DCF-B91E-D26718E6D0B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57922B57-201A-4DCF-B91E-D26718E6D0B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57922B57-201A-4DCF-B91E-D26718E6D0B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37BBF197-21CD-46A3-8A72-173CBA2FE7A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37BBF197-21CD-46A3-8A72-173CBA2FE7A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37BBF197-21CD-46A3-8A72-173CBA2FE7A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37BBF197-21CD-46A3-8A72-173CBA2FE7A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04B98D5A-6A44-482F-8A5E-8DBFA37A3DCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04B98D5A-6A44-482F-8A5E-8DBFA37A3DCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04B98D5A-6A44-482F-8A5E-8DBFA37A3DCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04B98D5A-6A44-482F-8A5E-8DBFA37A3DCE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6FD4BCD2-620D-4B4B-A989-4139C9047389}
+	EndGlobalSection
+EndGlobal
