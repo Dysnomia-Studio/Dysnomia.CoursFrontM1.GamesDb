@@ -74,9 +74,12 @@ namespace Dysnomia.CoursFrontM1.GamesDb.Business.Implementations {
 
                 List<Game> favorites = [];
                 foreach (var id in user.Favorites) {
-                    favorites.Add(
-                        await _gameService.GetGameById(id)
-                    );
+                    var game = await _gameService.GetGameById(id);
+                    if (game is not null) {
+                        favorites.Add(
+                           game
+                        );
+                    }
                 }
 
                 return new UserDto {

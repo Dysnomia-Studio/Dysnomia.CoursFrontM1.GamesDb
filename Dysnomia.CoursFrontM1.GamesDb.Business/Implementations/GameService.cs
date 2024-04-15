@@ -13,7 +13,7 @@ namespace Dysnomia.CoursFrontM1.GamesDb.Business.Implementations {
             this.IGDBClient = new IGDBClient(options?.Value?.IGDBClientId, options?.Value?.IGDBClientSecret);
         }
 
-        private static Dictionary<(uint, uint), (DateTime, Game[])> getGamesCache = [];
+        private static readonly Dictionary<(uint, uint), (DateTime, Game[])> getGamesCache = [];
         public async Task<Game[]> GetGames(uint pageSize, uint page) {
             if (pageSize < 5 || pageSize > 500) {
                 throw new InvalidDataException("Page size must be between 5 and 500");
@@ -23,9 +23,9 @@ namespace Dysnomia.CoursFrontM1.GamesDb.Business.Implementations {
                 throw new InvalidDataException("Page number must greater or equal to one");
             }
 
-            if (getGamesCache.TryGetValue((pageSize, page), out var gamesCache)) {
-                if (gamesCache.Item1 - DateTime.UtcNow < TimeSpan.FromHours(1)) {
-                    return gamesCache.Item2;
+            if (getGamesCache.TryGetValue((pageSize, page), out var gameCache)) {
+                if (gameCache.Item1 - DateTime.UtcNow < TimeSpan.FromHours(1)) {
+                    return gameCache.Item2;
                 }
             }
 
@@ -41,7 +41,7 @@ namespace Dysnomia.CoursFrontM1.GamesDb.Business.Implementations {
             return games;
         }
 
-        private static Dictionary<(string, uint, uint), (DateTime, Game[])> searchGamesCache = [];
+        private static readonly Dictionary<(string, uint, uint), (DateTime, Game[])> searchGamesCache = [];
         public async Task<Game[]> SearchGames(string term, uint pageSize, uint page) {
             if (pageSize < 5 || pageSize > 500) {
                 throw new InvalidDataException("Page size must be between 5 and 500");
@@ -51,9 +51,9 @@ namespace Dysnomia.CoursFrontM1.GamesDb.Business.Implementations {
                 throw new InvalidDataException("Page number must greater or equal to one");
             }
 
-            if (searchGamesCache.TryGetValue((term, pageSize, page), out var gamesCache)) {
-                if (gamesCache.Item1 - DateTime.UtcNow < TimeSpan.FromHours(1)) {
-                    return gamesCache.Item2;
+            if (searchGamesCache.TryGetValue((term, pageSize, page), out var gameCache)) {
+                if (gameCache.Item1 - DateTime.UtcNow < TimeSpan.FromHours(1)) {
+                    return gameCache.Item2;
                 }
             }
 
@@ -69,7 +69,7 @@ namespace Dysnomia.CoursFrontM1.GamesDb.Business.Implementations {
             return games;
         }
 
-        private static Dictionary<ulong, (DateTime, Game)> gamesCache = [];
+        private static readonly Dictionary<ulong, (DateTime, Game)> gamesCache = [];
         public async Task<Game?> GetGameById(ulong id) {
             if (gamesCache.TryGetValue(id, out var gameCache)) {
                 if (gameCache.Item1 - DateTime.UtcNow < TimeSpan.FromHours(1)) {
