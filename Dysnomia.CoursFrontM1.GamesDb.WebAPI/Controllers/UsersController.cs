@@ -66,6 +66,24 @@ namespace Dysnomia.CoursFrontM1.GamesDb.WebAPI.Controllers {
             return Ok(user);
         }
 
+        [HttpPost("favorites/add/{gameId}")]
+        public async Task<ActionResult> AddGameToFavorites(ulong gameId) {
+            try {
+                await usersService.AddGameToFavorites(HttpContext?.User?.Identity?.Name, gameId);
+                return NoContent();
+            } catch (InvalidDataException) {
+                return Conflict();
+            }
+        }
 
+        [HttpDelete("favorites/remove/{gameId}")]
+        public async Task<ActionResult> RemoveGameFromFavorites(ulong gameId) {
+            try {
+                await usersService.RemoveGameFromFavorites(HttpContext?.User?.Identity?.Name, gameId);
+                return NoContent();
+            } catch (InvalidDataException) {
+                return Conflict();
+            }
+        }
     }
 }

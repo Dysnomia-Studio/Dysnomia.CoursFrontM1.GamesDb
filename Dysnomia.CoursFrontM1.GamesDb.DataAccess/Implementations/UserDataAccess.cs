@@ -15,6 +15,10 @@ namespace Dysnomia.CoursFrontM1.GamesDb.DataAccess.Implementations {
             return context.Users.FirstOrDefaultAsync(x => x.Name == username);
         }
 
+        public Task PersistChangesAsync() {
+            return context.SaveChangesAsync();
+        }
+
         public async Task Register(UserRegistrationRequest registrationRequest) {
             await context.AddAsync(new UserDao() {
                 Name = registrationRequest.Username,

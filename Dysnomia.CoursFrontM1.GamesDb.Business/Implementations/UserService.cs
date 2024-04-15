@@ -4,6 +4,8 @@ using Dysnomia.CoursFrontM1.GamesDb.Common.Dto;
 using Dysnomia.CoursFrontM1.GamesDb.Common.Requests;
 using Dysnomia.CoursFrontM1.GamesDb.DataAccess.Interfaces;
 
+using IGDB.Models;
+
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -15,12 +17,14 @@ using System.Text;
 namespace Dysnomia.CoursFrontM1.GamesDb.Business.Implementations {
     public class UserService : IUserService {
         private readonly IUserDataAccess _userDataAccess;
+        private readonly IGameService _gameService;
         private readonly ILogger<UserService> _logger;
         private readonly string JwtKey;
         private readonly string JwtIssuer;
 
-        public UserService(IUserDataAccess userDataAccess, ILogger<UserService> logger, IOptions<AppSettings> options) {
+        public UserService(IUserDataAccess userDataAccess, IGameService gameService, ILogger<UserService> logger, IOptions<AppSettings> options) {
             _userDataAccess = userDataAccess;
+            _gameService = gameService;
             _logger = logger;
 
             this.JwtKey = options.Value.JwtKey;
@@ -63,7 +67,23 @@ namespace Dysnomia.CoursFrontM1.GamesDb.Business.Implementations {
 
         public async Task<UserDto?> GetByUsername(string? name) {
             try {
-                return (await _userDataAccess.GetByUsername(name)).ToDTO();
+                var user = await _userDataAccess.GetByUsername(name);
+                if (user is null) {
+                    return null;
+                }
+
+                List<Game> favorites = [];
+                foreach (var id in user.Favorites) {
+                    favorites.Add(
+                        await _gameService.GetGameById(id)
+                    );
+                }
+
+                return new UserDto {
+                    Id = user.Id,
+                    Name = user.Name,
+                    Favorites = favorites
+                };
             } catch (Exception e) {
                 _logger.LogError(e, $"Error when getting an user by its username: \"{name}\"");
 
@@ -112,6 +132,44 @@ namespace Dysnomia.CoursFrontM1.GamesDb.Business.Implementations {
                 return GenerateJwtToken(name);
             } catch (Exception e) {
                 _logger.LogError(e, $"Error when renewing user token: \"{name}\"");
+
+                throw;
+            }
+        }
+
+        public async Task AddGameToFavorites(string? name, ulong gameId) {
+            try {
+                var user = await _userDataAccess.GetByUsername(name);
+                if (user is null) {
+                    throw new Exception();
+                }
+
+                if (user.Favorites.Contains(gameId)) {
+                    throw new InvalidDataException();
+                }
+
+                user.Favorites.Add(gameId);
+
+                await _userDataAccess.PersistChangesAsync();
+            } catch (Exception e) {
+                _logger.LogError(e, $"Error when trying to register an user");
+
+                throw;
+            }
+        }
+
+        public async Task RemoveGameFromFavorites(string? name, ulong gameId) {
+            try {
+                var user = await _userDataAccess.GetByUsername(name);
+                if (user is null) {
+                    throw new Exception();
+                }
+
+                user.Favorites.Remove(gameId);
+
+                await _userDataAccess.PersistChangesAsync();
+            } catch (Exception e) {
+                _logger.LogError(e, $"Error when trying to register an user");
 
                 throw;
             }
