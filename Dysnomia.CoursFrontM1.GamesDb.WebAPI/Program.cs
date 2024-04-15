@@ -48,6 +48,7 @@ namespace Dysnomia.CoursFrontM1.GamesDb.WebAPI {
                 builder.Services.AddTransient<IUserDataAccess, UserDataAccess>();
 
                 // Services
+                builder.Services.AddTransient<IGameService, GameService>();
                 builder.Services.AddTransient<IUserService, UserService>();
 
                 builder.Services.AddControllers().AddJsonOptions(opt => {
