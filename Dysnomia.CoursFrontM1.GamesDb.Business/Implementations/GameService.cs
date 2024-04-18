@@ -52,7 +52,7 @@ namespace Dysnomia.CoursFrontM1.GamesDb.Business.Implementations {
 			}
 
 			if (searchGamesCache.TryGetValue((term, pageSize, page), out var gameCache)) {
-				if (gameCache.Item1 - DateTime.UtcNow < TimeSpan.FromHours(1)) {
+				if (gameCache.Item1 - DateTime.UtcNow < TimeSpan.FromDays(1)) {
 					return gameCache.Item2;
 				}
 			}
@@ -72,7 +72,7 @@ namespace Dysnomia.CoursFrontM1.GamesDb.Business.Implementations {
 		private static readonly Dictionary<ulong, (DateTime, Game)> gamesCache = [];
 		public async Task<Game?> GetGameById(ulong id) {
 			if (gamesCache.TryGetValue(id, out var gameCache)) {
-				if (gameCache.Item1 - DateTime.UtcNow < TimeSpan.FromHours(1)) {
+				if (gameCache.Item1 - DateTime.UtcNow < TimeSpan.FromDays(1)) {
 					return gameCache.Item2;
 				}
 			}
@@ -87,6 +87,30 @@ namespace Dysnomia.CoursFrontM1.GamesDb.Business.Implementations {
 			}
 
 			return game;
+		}
+
+		private static readonly Dictionary<ulong, (DateTime, Screenshot[])> gamesScreenshotsCache = [];
+		public async Task<Screenshot[]> GetGameScreenshots(ulong id) {
+			if (gamesScreenshotsCache.TryGetValue(id, out var gameScreenshotsCache)) {
+				if (gameScreenshotsCache.Item1 - DateTime.UtcNow < TimeSpan.FromDays(1)) {
+					return gameScreenshotsCache.Item2;
+				}
+			}
+
+			var request = $"fields *; sort rating desc; where game = {id};";
+
+			var screenshots = (await IGDBClient.QueryAsync<Screenshot>(
+				IGDBClient.Endpoints.Screenshots,
+				request
+			)).Select(x => {
+				x.Url = "https:" + x.Url.Replace("t_thumb", "t_original");
+
+				return x;
+			}).ToArray();
+
+			gamesScreenshotsCache[id] = (DateTime.UtcNow, screenshots);
+
+			return screenshots;
 		}
 	}
 }

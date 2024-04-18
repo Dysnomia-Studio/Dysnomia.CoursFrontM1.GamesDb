@@ -67,5 +67,16 @@ namespace Dysnomia.CoursFrontM1.GamesDb.WebAPI.Controllers {
 		public async Task<ActionResult<Game>> GetGameById(ulong id) {
 			return Ok(await gameService.GetGameById(id));
 		}
+
+		[HttpGet("screenshots/{id}")]
+		[ProducesResponseType(typeof(Screenshot[]), StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status204NoContent)]
+		public async Task<ActionResult<Screenshot[]>> GetGameScreenshots(ulong id) {
+			var screenshots = await gameService.GetGameScreenshots(id);
+			if (screenshots.Any()) {
+				return Ok(screenshots);
+			}
+			return NoContent();
+		}
 	}
 }
