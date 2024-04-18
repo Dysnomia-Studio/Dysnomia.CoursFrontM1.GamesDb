@@ -68,6 +68,12 @@ namespace Dysnomia.CoursFrontM1.GamesDb.WebAPI.Controllers {
 			return Ok(await gameService.GetGameById(id));
 		}
 
+		/// <summary>
+		/// (No Auth) Get screenshots for a specific game 
+		/// </summary>
+		/// <param name="id">Game id (.id field in a game object)</param>
+		/// <returns>Screenshot list</returns>
+		[AllowAnonymous]
 		[HttpGet("screenshots/{id}")]
 		[ProducesResponseType(typeof(Screenshot[]), StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status204NoContent)]
