@@ -8,11 +8,12 @@ using Dysnomia.CoursFrontM1.GamesDb.WebAPI.HealthCheck;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using NLog;
 using NLog.Web;
-
+using System.Reflection;
 using System.Text;
 using System.Text.Json.Serialization;
 
@@ -77,6 +78,9 @@ namespace Dysnomia.CoursFrontM1.GamesDb.WebAPI {
 					setup.AddSecurityRequirement(new OpenApiSecurityRequirement {
 						{ jwtSecurityScheme, Array.Empty<string>() }
 					});
+
+					var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+					setup.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 				});
 
 				builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

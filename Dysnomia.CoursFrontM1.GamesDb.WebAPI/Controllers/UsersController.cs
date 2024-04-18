@@ -16,6 +16,11 @@ namespace Dysnomia.CoursFrontM1.GamesDb.WebAPI.Controllers {
 			this.usersService = usersService;
 		}
 
+		/// <summary>
+		/// (No auth) Authenticate an user by its username and password
+		/// </summary>
+		/// <param name="authenticationRequest"></param>
+		/// <returns>JWT Token for this user</returns>
 		[AllowAnonymous]
 		[HttpPost("auth")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
@@ -30,6 +35,11 @@ namespace Dysnomia.CoursFrontM1.GamesDb.WebAPI.Controllers {
 			return Ok(token);
 		}
 
+		/// <summary>
+		/// (No auth) Register an user by its username and password
+		/// </summary>
+		/// <param name="registrationRequest"></param>
+		/// <returns>JWT Token for this user</returns>
 		[AllowAnonymous]
 		[HttpPost("register")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
@@ -44,6 +54,10 @@ namespace Dysnomia.CoursFrontM1.GamesDb.WebAPI.Controllers {
 			}
 		}
 
+		/// <summary>
+		/// (Needs auth) Renew the token of the current user
+		/// </summary>
+		/// <returns>JWT Token for this user</returns>
 		[HttpGet("renewToken")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -62,6 +76,10 @@ namespace Dysnomia.CoursFrontM1.GamesDb.WebAPI.Controllers {
 			return Ok(token);
 		}
 
+		/// <summary>
+		/// (Needs auth) Get the current user informations
+		/// </summary>
+		/// <returns>Informations about this user</returns>
 		[HttpGet("me")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -76,6 +94,11 @@ namespace Dysnomia.CoursFrontM1.GamesDb.WebAPI.Controllers {
 			return Ok(user);
 		}
 
+		/// <summary>
+		/// (Needs auth) Adds a game to the current user favorites
+		/// </summary>
+		/// <param name="gameId">Game Id (.id field in game data object)</param>
+		/// <returns></returns>
 		[HttpPost("favorites/add/{gameId}")]
 		[ProducesResponseType(StatusCodes.Status204NoContent)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -89,6 +112,11 @@ namespace Dysnomia.CoursFrontM1.GamesDb.WebAPI.Controllers {
 			}
 		}
 
+		/// <summary>
+		/// (Needs auth) Removes a game from the current user favorites list
+		/// </summary>
+		/// <param name="gameId">Game Id (.id field in game data object)</param>
+		/// <returns></returns>
 		[HttpDelete("favorites/remove/{gameId}")]
 		[ProducesResponseType(StatusCodes.Status204NoContent)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]

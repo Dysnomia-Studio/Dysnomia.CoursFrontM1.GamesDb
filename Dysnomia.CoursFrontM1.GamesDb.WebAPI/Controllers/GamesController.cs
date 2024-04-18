@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dysnomia.CoursFrontM1.GamesDb.WebAPI.Controllers {
+	/// <summary>
+	/// Get games reference data
+	/// </summary>
 	[Authorize(Policy = AuthPolicies.JWT_POLICY)]
 	[ApiController]
 	[Route("api/[controller]")]
@@ -16,6 +19,12 @@ namespace Dysnomia.CoursFrontM1.GamesDb.WebAPI.Controllers {
 			this.gameService = gameService;
 		}
 
+		/// <summary>
+		/// (No auth) Get games ordered by positive review % descending, reviews are weighted which means number of votes is also taken in account
+		/// </summary>
+		/// <param name="pageSize">Number of items per result page, default is 10, max is 500</param>
+		/// <param name="page">Page number to fetch, default is 1</param>
+		/// <returns>A list of games</returns>
 		[AllowAnonymous]
 		[HttpGet("top")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
@@ -28,6 +37,13 @@ namespace Dysnomia.CoursFrontM1.GamesDb.WebAPI.Controllers {
 			}
 		}
 
+		/// <summary>
+		/// (Needs auth) Get games matching a specific string
+		/// </summary>
+		/// <param name="term">String to search</param>
+		/// <param name="pageSize">Number of items per result page, default is 10, max is 500</param>
+		/// <param name="page">Page number to fetch, default is 1</param>
+		/// <returns>A list of games</returns>
 		[HttpGet("search")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -40,6 +56,11 @@ namespace Dysnomia.CoursFrontM1.GamesDb.WebAPI.Controllers {
 			}
 		}
 
+		/// <summary>
+		/// (Needs auth) Get a game by its unique id (.id field in a game object)
+		/// </summary>
+		/// <param name="id">The id to seek</param>
+		/// <returns>Game informations</returns>
 		[HttpGet("{id}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
