@@ -92,6 +92,7 @@ namespace Dysnomia.CoursFrontM1.GamesDb.WebAPI.Controllers {
         /// <returns>Platform list</returns>
         [AllowAnonymous]
         [HttpPost("platforms")]
+        [ProducesResponseType(typeof(Screenshot[]), StatusCodes.Status200OK)]
         public async Task<ActionResult<Platform[]>> GetGamePlatforms(IEnumerable<int> ids) {
             return Ok(await gameService.GetGamePlatforms(ids));
         }

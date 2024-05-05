@@ -1,6 +1,0 @@
-@Dysnomia.CoursFrontM1.GamesDb.WebAPI_HostAddress = http://localhost:5252
-
-GET {{Dysnomia.CoursFrontM1.GamesDb.WebAPI_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
