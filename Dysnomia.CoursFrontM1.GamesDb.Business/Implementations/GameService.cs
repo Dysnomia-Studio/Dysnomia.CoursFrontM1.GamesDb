@@ -125,5 +125,29 @@ namespace Dysnomia.CoursFrontM1.GamesDb.Business.Implementations {
                 request
             );
         }
+
+        private static readonly Dictionary<ulong, (DateTime, Cover[])> gamesCoversCache = [];
+        public async Task<Cover[]> GetGameCovers(ulong id) {
+            if (gamesCoversCache.TryGetValue(id, out var gamesCoverCache)) {
+                if (gamesCoverCache.Item1 - DateTime.UtcNow < TimeSpan.FromDays(1)) {
+                    return gamesCoverCache.Item2;
+                }
+            }
+
+            var request = $"fields *; where game = {id};";
+
+            var covers = (await IGDBClient.QueryAsync<Cover>(
+                IGDBClient.Endpoints.Covers,
+                request
+            )).Select(x => {
+                x.Url = "https:" + x.Url.Replace("t_thumb", "t_original");
+
+                return x;
+            }).ToArray();
+
+            gamesCoversCache[id] = (DateTime.UtcNow, covers);
+
+            return covers;
+        }
     }
 }

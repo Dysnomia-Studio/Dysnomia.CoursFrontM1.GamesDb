@@ -1,4 +1,4 @@
-using Dysnomia.CoursFrontM1.GamesDb.Business.Interfaces;
+﻿using Dysnomia.CoursFrontM1.GamesDb.Business.Interfaces;
 using Dysnomia.CoursFrontM1.GamesDb.Common;
 
 using IGDB.Models;
@@ -95,6 +95,23 @@ namespace Dysnomia.CoursFrontM1.GamesDb.WebAPI.Controllers {
         [ProducesResponseType(typeof(Screenshot[]), StatusCodes.Status200OK)]
         public async Task<ActionResult<Platform[]>> GetGamePlatforms(IEnumerable<int> ids) {
             return Ok(await gameService.GetGamePlatforms(ids));
+        }
+
+        /// <summary>
+        /// (No Auth) Get cover pictures for a specific game 
+        /// </summary>
+        /// <param name="id">Game id (.id field in a game object)</param>
+        /// <returns>Cover list</returns>
+        [AllowAnonymous]
+        [HttpGet("covers/{id}")]
+        [ProducesResponseType(typeof(Screenshot[]), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<ActionResult<Screenshot[]>> GetGameCovers(ulong id) {
+            var covers = await gameService.GetGameCovers(id);
+            if (covers.Any()) {
+                return Ok(covers);
+            }
+            return NoContent();
         }
     }
 }
