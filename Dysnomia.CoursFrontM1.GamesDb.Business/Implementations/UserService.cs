@@ -177,5 +177,15 @@ namespace Dysnomia.CoursFrontM1.GamesDb.Business.Implementations {
                 throw;
             }
         }
+
+        public async Task DeleteAccount(string name) {
+            try {
+                await _userDataAccess.DeleteAccount(name);
+            } catch (Exception e) {
+                _logger.LogError(e, $"Error when renewing user token: \"{name}\"");
+
+                throw;
+            }
+        }
     }
 }

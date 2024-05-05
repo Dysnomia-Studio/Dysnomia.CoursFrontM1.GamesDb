@@ -7,5 +7,6 @@ namespace Dysnomia.CoursFrontM1.GamesDb.DataAccess.Interfaces {
         Task<UserDao?> GetByUsername(string? username);
         Task PersistChangesAsync();
         Task Register(UserRegistrationRequest registrationRequest);
+        Task DeleteAccount(string name);
     }
 }

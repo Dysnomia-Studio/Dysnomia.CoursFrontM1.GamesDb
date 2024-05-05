@@ -11,6 +11,7 @@ namespace Dysnomia.CoursFrontM1.GamesDb.DataAccess.Implementations {
         public UserDataAccess(DatabaseContext context) {
             this.context = context;
         }
+
         public Task<UserDao?> GetByUsername(string? username) {
             return context.Users.FirstOrDefaultAsync(x => x.Name == username);
         }
@@ -26,6 +27,10 @@ namespace Dysnomia.CoursFrontM1.GamesDb.DataAccess.Implementations {
                 Favorites = []
             });
             await context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAccount(string name) {
+            await context.Users.Where(c => c.Name == name).ExecuteDeleteAsync();
         }
     }
 }

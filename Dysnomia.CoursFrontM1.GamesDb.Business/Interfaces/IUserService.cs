@@ -9,5 +9,6 @@ namespace Dysnomia.CoursFrontM1.GamesDb.Business.Interfaces {
         Task<string> Register(UserRegistrationRequest registrationRequest);
         Task RemoveGameFromFavorites(string? name, ulong gameId);
         string RenewToken(string name);
+        Task DeleteAccount(string name);
     }
 }
