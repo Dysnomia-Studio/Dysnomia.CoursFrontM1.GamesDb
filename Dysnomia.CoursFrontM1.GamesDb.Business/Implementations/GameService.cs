@@ -29,7 +29,7 @@ namespace Dysnomia.CoursFrontM1.GamesDb.Business.Implementations {
                 }
             }
 
-            var request = $"fields *; sort rating desc; where rating != null; limit {pageSize};";
+            var request = $"fields *; sort total_rating desc; where rating != null & total_rating_count > 50; limit {pageSize};";
             if (page > 1) {
                 request += $"offset {pageSize * (page - 1)};";
             }
