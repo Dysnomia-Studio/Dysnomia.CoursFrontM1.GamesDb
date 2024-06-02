@@ -79,7 +79,7 @@ namespace Dysnomia.CoursFrontM1.GamesDb.WebAPI.Controllers {
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<ActionResult<Screenshot[]>> GetGameScreenshots(ulong id) {
             var screenshots = await gameService.GetGameScreenshots(id);
-            if (screenshots.Any()) {
+            if (screenshots.Length != 0) {
                 return Ok(screenshots);
             }
             return NoContent();
@@ -88,7 +88,7 @@ namespace Dysnomia.CoursFrontM1.GamesDb.WebAPI.Controllers {
         /// <summary>
         /// (Needs auth) Get games platforms by their ids
         /// </summary>
-        /// <param name="id">Plaform ids (.platforms.ids field in a game object)</param>
+        /// <param name="ids">Plaform ids (.platforms.ids field in a game object)</param>
         /// <returns>Platform list</returns>
         [AllowAnonymous]
         [HttpPost("platforms")]
@@ -108,7 +108,7 @@ namespace Dysnomia.CoursFrontM1.GamesDb.WebAPI.Controllers {
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<ActionResult<Screenshot[]>> GetGameCovers(ulong id) {
             var covers = await gameService.GetGameCovers(id);
-            if (covers.Any()) {
+            if (covers.Length != 0) {
                 return Ok(covers);
             }
             return NoContent();

@@ -15,10 +15,8 @@ namespace Dysnomia.CoursFrontM1.GamesDb.Business.Implementations {
 
         private static readonly Dictionary<int, (DateTime, Company)> companiesCache = [];
         public async Task<Company?> GetCompanyByIdAsync(int id) {
-            if (companiesCache.TryGetValue(id, out var gameCache)) {
-                if (gameCache.Item1 - DateTime.UtcNow < TimeSpan.FromDays(1)) {
-                    return gameCache.Item2;
-                }
+            if (companiesCache.TryGetValue(id, out var gameCache) && gameCache.Item1 - DateTime.UtcNow < TimeSpan.FromDays(1)) {
+                return gameCache.Item2;
             }
 
             var request = $"fields *; where id = {id};";

@@ -23,10 +23,8 @@ namespace Dysnomia.CoursFrontM1.GamesDb.Business.Implementations {
                 throw new InvalidDataException("Page number must greater or equal to one");
             }
 
-            if (getGamesCache.TryGetValue((pageSize, page), out var gameCache)) {
-                if (gameCache.Item1 - DateTime.UtcNow < TimeSpan.FromDays(1)) {
-                    return gameCache.Item2;
-                }
+            if (getGamesCache.TryGetValue((pageSize, page), out var gameCache) && gameCache.Item1 - DateTime.UtcNow < TimeSpan.FromDays(1)) {
+                return gameCache.Item2;
             }
 
             var request = $"fields *; sort total_rating desc; where rating != null & total_rating_count > 50; limit {pageSize};";
@@ -51,10 +49,8 @@ namespace Dysnomia.CoursFrontM1.GamesDb.Business.Implementations {
                 throw new InvalidDataException("Page number must greater or equal to one");
             }
 
-            if (searchGamesCache.TryGetValue((term, pageSize, page), out var gameCache)) {
-                if (gameCache.Item1 - DateTime.UtcNow < TimeSpan.FromDays(1)) {
-                    return gameCache.Item2;
-                }
+            if (searchGamesCache.TryGetValue((term, pageSize, page), out var gameCache) && gameCache.Item1 - DateTime.UtcNow < TimeSpan.FromDays(1)) {
+                return gameCache.Item2;
             }
 
             var request = $"fields *; search \"{term}\"; limit {pageSize};";
@@ -71,10 +67,8 @@ namespace Dysnomia.CoursFrontM1.GamesDb.Business.Implementations {
 
         private static readonly Dictionary<ulong, (DateTime, Game)> gamesCache = [];
         public async Task<Game?> GetGameById(ulong id) {
-            if (gamesCache.TryGetValue(id, out var gameCache)) {
-                if (gameCache.Item1 - DateTime.UtcNow < TimeSpan.FromDays(1)) {
-                    return gameCache.Item2;
-                }
+            if (gamesCache.TryGetValue(id, out var gameCache) && gameCache.Item1 - DateTime.UtcNow < TimeSpan.FromDays(1)) {
+                return gameCache.Item2;
             }
 
             var request = $"fields *; sort rating desc; where id = {id};";
@@ -91,10 +85,8 @@ namespace Dysnomia.CoursFrontM1.GamesDb.Business.Implementations {
 
         private static readonly Dictionary<ulong, (DateTime, Screenshot[])> gamesScreenshotsCache = [];
         public async Task<Screenshot[]> GetGameScreenshots(ulong id) {
-            if (gamesScreenshotsCache.TryGetValue(id, out var gameScreenshotsCache)) {
-                if (gameScreenshotsCache.Item1 - DateTime.UtcNow < TimeSpan.FromDays(1)) {
-                    return gameScreenshotsCache.Item2;
-                }
+            if (gamesScreenshotsCache.TryGetValue(id, out var gameScreenshotsCache) && gameScreenshotsCache.Item1 - DateTime.UtcNow < TimeSpan.FromDays(1)) {
+                return gameScreenshotsCache.Item2;
             }
 
             var request = $"fields *; sort rating desc; where game = {id};";
@@ -128,10 +120,8 @@ namespace Dysnomia.CoursFrontM1.GamesDb.Business.Implementations {
 
         private static readonly Dictionary<ulong, (DateTime, Cover[])> gamesCoversCache = [];
         public async Task<Cover[]> GetGameCovers(ulong id) {
-            if (gamesCoversCache.TryGetValue(id, out var gamesCoverCache)) {
-                if (gamesCoverCache.Item1 - DateTime.UtcNow < TimeSpan.FromDays(1)) {
-                    return gamesCoverCache.Item2;
-                }
+            if (gamesCoversCache.TryGetValue(id, out var gamesCoverCache) && gamesCoverCache.Item1 - DateTime.UtcNow < TimeSpan.FromDays(1)) {
+                return gamesCoverCache.Item2;
             }
 
             var request = $"fields *; where game = {id};";
