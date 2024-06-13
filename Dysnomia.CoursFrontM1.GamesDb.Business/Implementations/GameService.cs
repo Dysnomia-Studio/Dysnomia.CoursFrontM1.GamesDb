@@ -41,7 +41,7 @@ namespace Dysnomia.CoursFrontM1.GamesDb.Business.Implementations {
 
         private static readonly Dictionary<(string, uint, uint), (DateTime, Game[])> searchGamesCache = [];
         public async Task<Game[]> SearchGames(string term, uint pageSize, uint page) {
-            if (pageSize < 5 || pageSize > 500) {
+            if (pageSize < 1 || pageSize > 500) {
                 throw new InvalidDataException("Page size must be between 5 and 500");
             }
 
